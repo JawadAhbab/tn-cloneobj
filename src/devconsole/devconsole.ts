@@ -1,7 +1,7 @@
 import { consoler } from 'tn-consoler'
 
-export default {
-  invalid (value: any) {
+export const devconsole = {
+  invalid(value: any) {
     consoler.groupCollapsed(`{bgred:error}
     {yellow+b:cloneobj}{b:()}
     {grey+b:>} {red+b:Invalid value}`)
@@ -11,5 +11,5 @@ export default {
     consoler.log(`{b:Stop logging :}
     {yellow+b:cloneobj}{b:(value, deep, }{orange+b:false}{b:)}`)
     consoler.groupEnd(true)
-  }
+  },
 }
