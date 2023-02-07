@@ -1,1 +1,1 @@
-export default function (val: any): any;
+export declare const cloneShallow: (val: any) => any;

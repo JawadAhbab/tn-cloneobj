@@ -5,17 +5,7 @@ var _toConsumableArray = require("@babel/runtime/helpers/toConsumableArray").def
 var _slicedToArray = require("@babel/runtime/helpers/slicedToArray").default;
 var tnValidate = require('tn-validate');
 var tnConsoler = require('tn-consoler');
-var devconsole = {
-  invalid: function invalid(value) {
-    tnConsoler.consoler.groupCollapsed("{bgred:error}\n    {yellow+b:cloneobj}{b:()}\n    {grey+b:>} {red+b:Invalid value}");
-    tnConsoler.consoler.log("{b:Expected :} value to be an\n    {cyan+b:Object} or {cyan+b:Array}");
-    tnConsoler.consoler.log('{b:Returned :}', {}, value);
-    tnConsoler.consoler.log("{b:Stop logging :}\n    {yellow+b:cloneobj}{b:(value, deep, }{orange+b:false}{b:)}");
-    tnConsoler.consoler.groupEnd(true);
-  }
-};
-function cloneDeep(val) {
-  // ARRAY
+var cloneDeep = function cloneDeep(val) {
   if (tnValidate.isArray(val)) {
     var newarr = [];
     val.forEach(function (v) {
@@ -23,7 +13,6 @@ function cloneDeep(val) {
     });
     return newarr;
   }
-  // OBJECT
   if (tnValidate.isObject(val)) {
     var newobj = {};
     Object.entries(val).forEach(function (_ref) {
@@ -34,21 +23,27 @@ function cloneDeep(val) {
     });
     return newobj;
   }
-  // OTHER
   return val;
-}
-function cloneShallow(val) {
+};
+var cloneShallow = function cloneShallow(val) {
   if (tnValidate.isArray(val)) return _toConsumableArray(val);
   if (tnValidate.isObject(val)) return _objectSpread({}, val);
   return val;
-}
+};
+var devconsole = {
+  invalid: function invalid(value) {
+    tnConsoler.consoler.groupCollapsed("{bgred:error}\n    {yellow+b:cloneobj}{b:()}\n    {grey+b:>} {red+b:Invalid value}");
+    tnConsoler.consoler.log("{b:Expected :} value to be an\n    {cyan+b:Object} or {cyan+b:Array}");
+    tnConsoler.consoler.log('{b:Returned :}', {}, value);
+    tnConsoler.consoler.log("{b:Stop logging :}\n    {yellow+b:cloneobj}{b:(value, deep, }{orange+b:false}{b:)}");
+    tnConsoler.consoler.groupEnd(true);
+  }
+};
 var cloneobj = function cloneobj(value) {
   var deepclone = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var logging = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   if (!tnValidate.isArrObject(value)) {
-    if (process.env.NODE_ENV === 'development') {
-      if (logging) devconsole.invalid(value);
-    }
+    if (process.env.NODE_ENV === 'development') if (logging) devconsole.invalid(value);
     return value;
   }
   if (deepclone) return cloneDeep(value);

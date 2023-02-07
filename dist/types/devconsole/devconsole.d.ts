@@ -1,4 +1,3 @@
-declare const _default: {
+export declare const devconsole: {
     invalid(value: any): void;
 };
-export default _default;

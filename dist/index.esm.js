@@ -3,17 +3,7 @@ import _toConsumableArray from "@babel/runtime/helpers/esm/toConsumableArray";
 import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
 import { isArray, isObject, isArrObject } from 'tn-validate';
 import { consoler } from 'tn-consoler';
-var devconsole = {
-  invalid: function invalid(value) {
-    consoler.groupCollapsed("{bgred:error}\n    {yellow+b:cloneobj}{b:()}\n    {grey+b:>} {red+b:Invalid value}");
-    consoler.log("{b:Expected :} value to be an\n    {cyan+b:Object} or {cyan+b:Array}");
-    consoler.log('{b:Returned :}', {}, value);
-    consoler.log("{b:Stop logging :}\n    {yellow+b:cloneobj}{b:(value, deep, }{orange+b:false}{b:)}");
-    consoler.groupEnd(true);
-  }
-};
-function cloneDeep(val) {
-  // ARRAY
+var cloneDeep = function cloneDeep(val) {
   if (isArray(val)) {
     var newarr = [];
     val.forEach(function (v) {
@@ -21,7 +11,6 @@ function cloneDeep(val) {
     });
     return newarr;
   }
-  // OBJECT
   if (isObject(val)) {
     var newobj = {};
     Object.entries(val).forEach(function (_ref) {
@@ -32,21 +21,27 @@ function cloneDeep(val) {
     });
     return newobj;
   }
-  // OTHER
   return val;
-}
-function cloneShallow(val) {
+};
+var cloneShallow = function cloneShallow(val) {
   if (isArray(val)) return _toConsumableArray(val);
   if (isObject(val)) return _objectSpread({}, val);
   return val;
-}
+};
+var devconsole = {
+  invalid: function invalid(value) {
+    consoler.groupCollapsed("{bgred:error}\n    {yellow+b:cloneobj}{b:()}\n    {grey+b:>} {red+b:Invalid value}");
+    consoler.log("{b:Expected :} value to be an\n    {cyan+b:Object} or {cyan+b:Array}");
+    consoler.log('{b:Returned :}', {}, value);
+    consoler.log("{b:Stop logging :}\n    {yellow+b:cloneobj}{b:(value, deep, }{orange+b:false}{b:)}");
+    consoler.groupEnd(true);
+  }
+};
 var cloneobj = function cloneobj(value) {
   var deepclone = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var logging = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   if (!isArrObject(value)) {
-    if (process.env.NODE_ENV === 'development') {
-      if (logging) devconsole.invalid(value);
-    }
+    if (process.env.NODE_ENV === 'development') if (logging) devconsole.invalid(value);
     return value;
   }
   if (deepclone) return cloneDeep(value);
